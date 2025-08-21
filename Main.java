@@ -289,12 +289,16 @@ public class Main {
     public static void main(String[] args) {
         CarRentalSystem rentalSystem = new CarRentalSystem();
 
-        Car car1 = new Car("C001", "Toyota", "Camry", 60.0);
+        Car car1 = new Car("C001", "Toyota ", "LC", 650.0);
         rentalSystem.addCar(car1);
-        Car car2 = new Car("C002", "Toyota", "LC", 500.0);
+        Car car2 = new Car("C002", "Tesla  ", "M3", 500.0);
         rentalSystem.addCar(car2);
-        Car car3 = new Car("C003", "Toyota", "Fortuner", 200.0);
+        Car car3 = new Car("C003", "Merc   ", "S-class", 1000.0);
         rentalSystem.addCar(car3);
+        Car car4 = new Car("C004", "BMW    ", "740i", 950.0);
+        rentalSystem.addCar(car4);
+        Car car5 = new Car("C005", "RR     ", "PIII", 1500.0);
+        rentalSystem.addCar(car5);
 
         rentalSystem.menu();
     }
