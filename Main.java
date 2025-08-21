@@ -130,7 +130,6 @@ class CarRentalSystem {
         }
         if (rentalToRemove != null) {
             rentals.remove(rentalToRemove);
-            System.out.println("Car returned successfully...");
         } else {
             System.out.println("Car was not rented.");
         }
@@ -157,20 +156,13 @@ class CarRentalSystem {
             if (choice == 1) {
                 System.out.println("------------------------------");
                 System.out.println("   You chose to rent a Car");
-                System.out.println("------------------------------");
-
-                System.out.print("Enter your name : ");
-                String customerName = sc.nextLine();
-
-                System.out.println("------------------------------");
-                System.out.println("      Available cars : ");
-                System.out.println("------------------------------");
+                System.out.println("==============================");
 
                 boolean hasAvailable = false;
                 for (Car car : cars) {
                     if (car.isAvailable()) {
                         hasAvailable = true;
-                        System.out.println(car.getCarId() + "  - " + car.getBrand() + "  - " + car.getModel());
+                        break;
                     }
                 }
 
@@ -180,16 +172,22 @@ class CarRentalSystem {
                     continue;
                 }
 
+                System.out.print("Enter your name : ");
+                String customerName = sc.nextLine();
+
+                System.out.println("------------------------------");
+                System.out.println("      Available cars : ");
+                System.out.println("------------------------------");
+
+                for (Car car : cars) {
+                    if (car.isAvailable()) {
+                        System.out.println(car.getCarId() + "  - " + car.getBrand() + "  - " + car.getModel());
+                    }
+                }
+
                 System.out.println("------------------------------");
                 System.out.print("Enter the ID of the car : ");
                 String carId = sc.nextLine();
-
-                System.out.print("Days of rental : ");
-                int rentalDays = sc.nextInt();
-                sc.nextLine();
-
-                Customer newCustomer = new Customer("CUS" + (customers.size() + 1), customerName);
-                addCustomer(newCustomer);
 
                 Car selectedCar = null;
                 for (Car car : cars) {
@@ -199,42 +197,47 @@ class CarRentalSystem {
                     }
                 }
 
-                if (selectedCar != null) {
-                    double totalPrice = selectedCar.calculatePrice(rentalDays);
-                    System.out.println("==============================");
-                    System.out.println("    Rental Information");
-                    System.out.println("==============================");
-                    System.out.println("Customer ID    : " + newCustomer.getCustomerId());
-                    System.out.println("Customer Name  : " + newCustomer.getName());
-                    System.out.println("Car            : " + selectedCar.getBrand() + " " + selectedCar.getModel());
-                    System.out.println("Rental Days    : " + rentalDays);
-                    System.out.printf("Total Price    : $%.2f%n", totalPrice);
+                if (selectedCar == null) {
+                    System.out.println("Invalid car selection or car not available!");
+                    continue;
+                }
 
-                    System.out.println("------------------------------");
-                    System.out.print("Confirm rental (Y/N) : ");
-                    String confirm = sc.nextLine();
-                    System.out.println("------------------------------");
+                System.out.print("Days of rental : ");
+                int rentalDays = sc.nextInt();
+                sc.nextLine();
 
-                    if (confirm.equalsIgnoreCase("Y")) {
-                        rentCar(selectedCar, newCustomer, rentalDays);
-                        System.out.println("\t  CONGRATS");
-                        System.out.println("   Car rented successfully");
-                        System.out.println("==============================");
-                    } else {
-                        System.out.println("Rental Canceled");
-                    }
+                Customer newCustomer = new Customer("CUS" + (customers.size() + 1), customerName);
+                addCustomer(newCustomer);
+
+                double totalPrice = selectedCar.calculatePrice(rentalDays);
+                System.out.println("==============================");
+                System.out.println("    Rental Information");
+                System.out.println("==============================");
+                System.out.println("Customer ID    : " + newCustomer.getCustomerId());
+                System.out.println("Customer Name  : " + newCustomer.getName());
+                System.out.println("Car            : " + selectedCar.getBrand() + " " + selectedCar.getModel());
+                System.out.println("Rental Days    : " + rentalDays);
+                System.out.printf("Total Price    : $%.2f%n", totalPrice);
+
+                System.out.println("------------------------------");
+                System.out.print("Confirm rental (Y/N) : ");
+                String confirm = sc.nextLine();
+                System.out.println("------------------------------");
+
+                if (confirm.equalsIgnoreCase("Y")) {
+                    rentCar(selectedCar, newCustomer, rentalDays);
+                    System.out.println("\t  CONGRATS");
+                    System.out.println("   Car rented successfully");
+                    System.out.println("==============================");
                 } else {
-                    System.out.println("------------------------------");
-                    System.out.println(" Invalid car selection or \n car not available for rent.");
-                    System.out.println("------------------------------");
+                    System.out.println("Rental Canceled");
                 }
             } else if (choice == 2) {
                 System.out.println("------------------------------");
                 System.out.println("  You chose to return a Car");
-                System.out.println("------------------------------");
+                System.out.println("==============================");
                 System.out.print("Enter the Id of the Car : ");
                 String carId = sc.nextLine();
-                System.out.println("------------------------------");
 
                 Car carToReturn = null;
                 for (Car car : cars) {
